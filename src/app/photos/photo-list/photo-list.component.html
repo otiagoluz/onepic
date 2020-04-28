@@ -1,6 +1,13 @@
-<op-photo 
-  *ngFor='let photo of photos' 
-  [description]='photo.description' 
-  [url]='photo.url'>
-</op-photo>
+<div class="text-center mt-3 mb-3">
+  <form>
+    <input 
+      class="rounded"
+      type="search"
+      placeholder="search..."
+      autofocus
+      (keyup)="filter = $event.target.value"
+      >
+  </form>
+</div>
 
+<op-photos [photos]="photos | filterByDescription: filter "></op-photos>
