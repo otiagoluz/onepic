@@ -5,9 +5,14 @@
       type="search"
       placeholder="search..."
       autofocus
-      (keyup)="filter = $event.target.value"
+      (keyup)="debounce.next($event.target.value)"
       >
   </form>
 </div>
 
 <op-photos [photos]="photos | filterByDescription: filter "></op-photos>
+
+<op-load-button 
+  (click)="load()" 
+  [hasMore]="hasMore"> 
+</op-load-button>
