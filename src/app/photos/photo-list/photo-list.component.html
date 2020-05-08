@@ -1,18 +1,14 @@
-<div class="text-center mt-3 mb-3">
-  <form>
-    <input 
-      class="rounded"
-      type="search"
-      placeholder="search..."
-      autofocus
-      (keyup)="debounce.next($event.target.value)"
-      >
-  </form>
-</div>
+<op-search
+  (onTyping)="filter = $event" [value]="filter">
+</op-search>
 
-<op-photos [photos]="photos | filterByDescription: filter "></op-photos>
+<op-photos 
+  [photos]="photos | filterByDescription: filter ">
+</op-photos>
 
 <op-load-button 
   (click)="load()" 
   [hasMore]="hasMore"> 
 </op-load-button>
+
+
