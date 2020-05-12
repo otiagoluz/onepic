@@ -1,6 +1,6 @@
 <h4 class="text-center">login</h4>
 
-<form [formGroup]="loginForm" class="form mt-4" (submit)="login()">
+<form [formGroup]="loginForm" class="form mt-4 m-4" (submit)="login()">
 
   <div class="form-group">
     <input 
@@ -36,4 +36,4 @@
 
 </form>
 
-<p>Not a user?<a>Register now</a></p>
+<p class="ml-4">Not a user?<a [routerLink]="['signup']"> Register now</a></p>
