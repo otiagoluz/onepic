@@ -1,7 +1,7 @@
 <h4 class="text-center">login</h4>
 
-<form [formGroup]="loginForm" class="form mt-4 m-4" (submit)="login()">
-
+<form [formGroup]="loginForm" class="form mt-4" (submit)="login()">
+  
   <div class="form-group">
     <input 
       #userNameInput
@@ -15,7 +15,7 @@
       text="User name is required!">
     </op-vmessage>
   </div>
-
+  
   <div class="form-group">
     <input
       formControlName="password"
@@ -36,4 +36,4 @@
 
 </form>
 
-<p class="ml-4">Not a user?<a [routerLink]="['signup']"> Register now</a></p>
+<p>Not a user?<a [routerLink]="['signup']"> Register now</a></p>

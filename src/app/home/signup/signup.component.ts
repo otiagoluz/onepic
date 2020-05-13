@@ -1,25 +1,29 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { UserNotTakenValidatorService } from './user-not-taken.validator.service';
 import { lowerCaseValidator } from 'src/app/shared/validators/lower-case.validator';
 import { SignUpService } from './signup.service';
 import { NewUser } from './new-user';
+import { PlatformDetectorService } from 'src/app/core/platform-detector/platform-detector.service';
 
 @Component({
-  templateUrl: './signup.component.html'
+  templateUrl: './signup.component.html',
+  providers: [ UserNotTakenValidatorService ]
 })
 
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit, AfterViewInit {
 
   signupForm: FormGroup;
+  @ViewChild('emailInput') emailInput: ElementRef<HTMLInputElement>;
 
   constructor(
     private formBuilder: FormBuilder, 
     private userNotTakenValidatorService: UserNotTakenValidatorService,
     private signUpService: SignUpService,
-    private router: Router) {}
+    private router: Router,
+    private platformDetectorService: PlatformDetectorService) {}
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
@@ -41,8 +45,14 @@ export class SignUpComponent implements OnInit {
         Validators.required,
         Validators.minLength(8),
         Validators.maxLength(14)]]
-    });
+    }); 
   }
+
+  ngAfterViewInit(): void {
+    this.platformDetectorService.isPlatformBrowser() &&
+        this.emailInput.nativeElement.focus();
+  }
+  
 
   signup() {
     const newUser = this.signupForm.getRawValue() as NewUser;
