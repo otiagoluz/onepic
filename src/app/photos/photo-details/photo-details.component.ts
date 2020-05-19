@@ -1,27 +1,33 @@
 import { PhotoService } from './../photo/photo.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Photo } from '../photo/photo';
 import { Observable } from 'rxjs';
 import { PhotoComment } from '../photo/photo-comment';
 
 @Component({
   templateUrl: './photo-details.component.html',
-  styleUrls: ['photo-details.css']
 })
 export class PhotoDetailsComoponent implements OnInit{
 
   photo$: Observable<Photo>;
-  comments$: Observable<PhotoComment[]>
+  photoId: number;
 
   constructor(
     private route: ActivatedRoute,
-    private photoService: PhotoService) {}
+    private photoService: PhotoService,
+    private router: Router
+  ) {}
   
   ngOnInit(): void {
-    const photoId = this.route.snapshot.params.photoId;
-    this.photo$ = this.photoService.findByIf(photoId)
-    this.comments$ = this.photoService.getComments(photoId);
+    this.photoId = this.route.snapshot.params.photoId;
+    this.photo$ = this.photoService.findByIf(this.photoId);
+  }
+
+  remove() {
+    this.photoService
+    .removePhoto(this.photoId)
+    .subscribe(() => this.router.navigate(['']));
   }
   
 }
